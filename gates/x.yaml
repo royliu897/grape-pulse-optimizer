@@ -1,0 +1,28 @@
+# Gate: Single-qubit X gate (NOT gate)
+# Flips |0> <-> |1> within the 3P0 nuclear spin subspace.
+# Driven by RF field at Larmor frequency -- does NOT use the 302nm laser.
+# Note: this is a 2x2 system, not the 6-level Rydberg system.
+
+gate_name: "x_gate"
+gate_type: "single_qubit_rf"
+description: "RF-driven X (NOT) gate on nuclear spin qubit"
+
+target: "X"
+qubit_indices: [0, 1]
+
+optimizer:
+  method: "lbfgs"
+  max_iter: 500
+  tol: 1.0e-9
+  n_starts: 4
+
+init:
+  Omega_mean: 1.6
+  Omega_std: 0.2
+  phi_mean: 0.0
+  phi_std: 0.3
+
+hardware_correction:
+  enabled: true
+  n_iter: 300
+  learning_rate: 0.05

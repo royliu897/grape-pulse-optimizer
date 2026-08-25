@@ -1,0 +1,52 @@
+# Lab configuration: Princeton 171Yb metastable qubit
+# Source: Ma et al. 2023 (arXiv:2305.05493)
+# These are the experimentally measured parameters from the paper.
+
+lab_name: "Paper"
+atom_species: "171Yb"
+qubit_encoding: "metastable_3P0"
+
+# --- Magnetic field ---
+B_field_gauss: 5.0
+
+# --- Qubit states (3P0 nuclear spin) ---
+# mF = -1/2 (|0>) and mF = +1/2 (|1>)
+# Zeeman splitting is negligible compared to Rydberg splitting
+delta_m_MHz: 0.0
+larmor_freq_kHz: 570.0          # RF frequency for single-qubit gates
+
+# --- Rydberg manifold (6s59s 3S1, F=3/2) ---
+# Zeeman splitting between adjacent mF sublevels
+delta_r_MHz: 9.3
+
+# --- 302nm UV laser (Rydberg excitation) ---
+omega_rabi_MHz: 1.6             # Rabi frequency at 6mW laser power
+gate_duration_us: 1.2           # time-optimal gate duration
+wavelength_nm: 302.0
+
+# --- Rydberg state lifetime ---
+T1_rydberg_us: 65.0             # dominant error source for 2-qubit gates
+
+# --- Metastable state lifetime ---
+T1_metastable_s: 2.96           # seconds -- negligible on gate timescale
+
+# --- Clebsch-Gordan coupling coefficients ---
+# For linear polarization at this geometry (perpendicular to B field)
+cg_strong: 0.5                  # |1> -> |r_{+3/2}> target transition
+cg_weak: 0.2887                 # 1 / (2*sqrt(3)) -- off-resonant coupling
+
+# --- Hardware (AOM + fiber delivery) ---
+hardware:
+  aom:
+    bandwidth_MHz: 10.0
+    settling_time_us: 0.15
+    phase_overshoot: 0.2
+    amplitude_noise: 0.005
+    phase_noise_rad: 0.005
+  fiber:
+    length_mm: 1500.0
+    dispersion_fs2_per_mm: 300.0
+    length_fluctuation_nm: 2.0
+
+# --- GRAPE discretization ---
+N_timesteps: 100

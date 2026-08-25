@@ -1,0 +1,46 @@
+# Physical parameters for the metastable 171Yb Rydberg qubit
+# All frequencies in units of 2pi * MHz unless noted
+# Source: Ma et al. 2023 (arXiv:2305.05493)
+
+# --- Magnetic field ---
+B_field_gauss: 5.0          # static magnetic field in Gauss
+
+# --- Qubit states (3P0 nuclear spin) ---
+# Zeeman splitting between mF = -1/2 and mF = +1/2 in 3P0
+# This is tiny compared to Rydberg splitting -- effectively 0 in the model
+delta_m_MHz: 0.000          # set to 0 as per paper (delta_m << delta_r)
+larmor_freq_kHz: 570.0      # RF Larmor frequency for single qubit gates
+
+# --- Rydberg manifold (6s59s 3S1, F=3/2) ---
+# Zeeman splitting between adjacent mF sublevels in the Rydberg state
+# This is the key parameter that gives us selectivity
+delta_r_MHz: 9.3            # 2pi * 9.3 MHz per sublevel spacing
+
+# --- Laser parameters (302nm UV) ---
+# Rabi frequency -- how strongly the laser couples |1> to |r>
+# This is set by the laser power (6mW in the paper)
+omega_rabi_MHz: 1.6         # 2pi * 1.6 MHz
+
+# Gate duration (time-optimal pulse from GRAPE)
+gate_duration_us: 1.2       # microseconds
+
+# --- Rydberg state lifetime ---
+T1_rydberg_us: 65.0         # microseconds -- finite lifetime is main error source
+
+# --- Metastable state lifetime ---
+T1_metastable_s: 2.96       # seconds -- much longer, not relevant for gate timescale
+
+# --- GRAPE discretization ---
+N_timesteps: 100            # number of time slices for GRAPE
+
+# --- Clebsch-Gordan coupling coefficients ---
+# These encode the angular momentum geometry for linear polarization
+# They are fixed by physics -- do not change these
+# Coupling |0> (mF=-1/2) to Rydberg sublevels:
+#   |0> -> |r_{-3/2}>  coefficient: 0.5
+#   |0> -> |r_{+1/2}>  coefficient: 0.5 / sqrt(3) ~ 0.289
+# Coupling |1> (mF=+1/2) to Rydberg sublevels:
+#   |1> -> |r_{-1/2}>  coefficient: 0.5 / sqrt(3) ~ 0.289
+#   |1> -> |r_{+3/2}>  coefficient: 0.5   <-- this is the TARGET transition
+cg_strong: 0.5              # strong coupling coefficient (1/2)
+cg_weak: 0.2887             # weak coupling coefficient (1/2*sqrt(3))

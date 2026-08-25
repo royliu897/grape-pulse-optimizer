@@ -1,0 +1,37 @@
+gate_name: "identity"
+gate_type: "single_qubit"
+description: "Identity gate -- full round trip back to computational space"
+target: "identity"
+qubit_indices: [0, 1]
+N_timesteps: 20
+
+optimizer:
+  method: "lbfgs"
+  max_iter: 500
+  tol: 1.0e-9
+  n_starts: 1
+
+init:
+  Omega_mean: 1.6
+  Omega_std: 0.1
+  phi_mean: 0.0
+  phi_std: 0.1
+
+# Regularization: penalize rough pulses so hardware can reproduce them.
+# beta is the primary knob -- physically tied to AOM bandwidth.
+# auto-suggested from lab config if not overridden here or via --beta flag.
+regularization:
+  alpha: 0.0      # power penalty (usually 0 is fine)
+  beta:  0.05     # smoothness penalty -- key for hardware compatibility
+  gamma: 0.05      # Gaussian envelope (0 = off)
+
+# Basin hopping settings (used with --basinhopping flag)
+basinhopping:
+  n_iter:   30    # outer basin hopping steps
+  T:        0.1   # temperature (acceptance of worse solutions)
+  stepsize: 0.3   # random perturbation size
+
+hardware_correction:
+  enabled: true
+  n_iter: 300
+  learning_rate: 0.05

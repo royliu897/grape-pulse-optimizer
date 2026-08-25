@@ -1,0 +1,52 @@
+# Lab configuration: Logiqal lab
+# Start from Princeton parameters as baseline.
+# Update hardware section with measured values as calibration data comes in.
+
+lab_name: "Not yet real"
+atom_species: "171Yb"
+qubit_encoding: "metastable_3P0"
+
+# --- Magnetic field ---
+B_field_gauss: 5.0              # UPDATE: set to your actual field
+
+# --- Qubit states ---
+delta_m_MHz: 0.0
+larmor_freq_kHz: 570.0          # UPDATE: measure with RF Ramsey
+
+# --- Rydberg manifold ---
+delta_r_MHz: 9.3                # scales linearly with B_field_gauss
+                                # UPDATE: measure from Rydberg spectroscopy
+
+# --- UV laser ---
+omega_rabi_MHz: 1.6             # UPDATE: measure from Rabi flopping (Fig 1d style)
+gate_duration_us: 1.2           # UPDATE: optimize based on your Rabi frequency
+wavelength_nm: 302.0
+
+# --- Rydberg state lifetime ---
+T1_rydberg_us: 65.0             # UPDATE: measure from Rydberg decay curve
+
+# --- Metastable state lifetime ---
+T1_metastable_s: 2.96           # UPDATE: measure from lifetime curve (Fig 2a style)
+
+# --- Clebsch-Gordan coupling coefficients ---
+# These are fixed by atomic physics -- do not change
+cg_strong: 0.5
+cg_weak: 0.2887
+
+# --- Hardware ---
+# UPDATE all hardware parameters from heterodyne calibration measurements
+# (see Fig S2 of Ma et al. for measurement procedure)
+hardware:
+  aom:
+    bandwidth_MHz: 10.0         # UPDATE: from AOM spec sheet or heterodyne fit
+    settling_time_us: 0.15      # UPDATE: fit from measured phase transient
+    phase_overshoot: 0.2        # UPDATE: fit from measured phase transient
+    amplitude_noise: 0.005      # UPDATE: measure from amplitude noise spectrum
+    phase_noise_rad: 0.005      # UPDATE: measure from phase noise spectrum
+  fiber:
+    length_mm: 1500.0           # UPDATE: measure your actual fiber length
+    dispersion_fs2_per_mm: 300.0 # UPDATE: from fiber spec sheet
+    length_fluctuation_nm: 2.0  # UPDATE: measure from phase drift over time
+
+# --- GRAPE discretization ---
+N_timesteps: 100                # increase for longer/more complex gates
